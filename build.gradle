@@ -1,0 +1,34 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.github.erikorbons'
+version = '0.1.0-SNAPSHOT'
+
+// Set source and target compatibility to 11: GraalVM native image currently supports either version
+// 8 or 11:
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.spring.io/milestone'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.experimental:spring-graalvm-native:0.8.3'
+}
+
+bootBuildImage {
+    builder = "paketobuildpacks/builder:tiny"
+    environment = [
+            "BP_BOOT_NATIVE_IMAGE"                : "1",
+            "BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS": "-Dspring.spel.ignore=true"
+    ]
+}

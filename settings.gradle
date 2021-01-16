@@ -1,0 +1,10 @@
+pluginManagement {
+    repositories {
+        maven {
+            url 'https://repo.spring.io/milestone'
+        }
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'spring-boot-native-demo'
